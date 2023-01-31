@@ -12,10 +12,10 @@ import java.util.regex.Pattern;
 import static java.awt.FlowLayout.CENTER;
 
 public class LoginPage extends JFrame {
-    JFrame frame = new JFrame("Login Page");
+    JFrame frame = new JFrame("Окно входа");
     final  JTextField login = new JTextField();
-    JLabel loginLabel = new JLabel("Name");
-    JButton enter = new JButton("Enter");
+    JLabel loginLabel = new JLabel("Имя");
+    JButton enter = new JButton("Вход");
     Font loginFont = new Font(Font.SERIF,Font.PLAIN,25);
 
      public void loginPage (){
@@ -32,6 +32,7 @@ public class LoginPage extends JFrame {
         login.setFont(loginFont);
         login.setBounds(100,30,150,50);
         login.setHorizontalAlignment(JTextField.CENTER);
+
 
 
         loginLabel.setFont(loginFont);
@@ -54,10 +55,10 @@ public class LoginPage extends JFrame {
          login.addKeyListener(new KeyAdapter() {
              @Override
              public void keyPressed(KeyEvent e) {
-                 Pattern p = Pattern.compile("(([a-zA-Z]){0,}([\\.]){0,})+");
+                 Pattern p = Pattern.compile("(([a-zA-Z]){0,}([\\.]){0,}([а-яА-Я]){0,}([\\.]){0,})+");
                  Matcher m =p.matcher(login.getText());
                  if(!m.matches()){
-                     login.setText("Wrong");
+                     login.setText("Ошибка");
                  }
 
              }

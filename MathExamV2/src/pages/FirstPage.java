@@ -12,14 +12,14 @@ public class FirstPage extends JFrame
     public int TypeOfExam = 3;
     public int FirstNumber = 8;
     public int SecondNumber = 8;
-    public  int Score = 0;
+    public  int Score = 10;
 
 
     public Font numFont = new Font(Font.SERIF,1,55);
     public Font actionNumFont = new Font(Font.SERIF,1,45);
     public Font rulesNumFont = new Font(Font.SERIF,1,30);
 
-    public FirstPage ()
+    public  FirstPage ()
     {
       //  super("Тестовый Экзамен");
         setTitle("Тестовый Экзамен");
@@ -34,25 +34,14 @@ public class FirstPage extends JFrame
         setSize(900,500);
         setLocationRelativeTo(null);
 
-        add(firstNumberTextField());
-        add(secondNumberTextField());
-        add(equalTextField());
-        add(actionTextField());
-        add(checkButton());
-        add(newExamButton());
-        add(answerTextField());
-        add(scoreTextField());
-        add(rulesTextField());
-        add(ratioTextField());
+        JTextArea rulesExam = new JTextArea(5,1);
+        rulesExam.setBounds(10,10,570,100);
+        rulesExam.setLineWrap(true);
+        rulesExam.setFont(rulesNumFont);
+        rulesExam.setText(" Чем сложнее пример, тем больше монет ты получишь! Набери 100 монет! ");
+        rulesExam.setEditable(false);
+        rulesExam.setFocusable(false);
 
-        getContentPane().setBackground(new Color(125,200,125));
-        setLayout(null);
-        setVisible(true);
-
-    }
-
-
-    private JTextField ratioTextField () {
         JTextField ratio = new JTextField();
         ratio.setBounds(590, 10, 100, 100);
         ratio.setFocusable(false);
@@ -60,27 +49,16 @@ public class FirstPage extends JFrame
         ratio.setFont(numFont);
         ratio.setEditable(false);
         ratio.setText("" + foundRatio());
-        add(ratio);
 
-        return ratio;
-    }
-    private JTextArea rulesTextField () {
-        JTextArea rulesExam = new JTextArea(5,1);
-        rulesExam.setBounds(10,10,570,100);
-        rulesExam.setLineWrap(true);
-        rulesExam.setFont(rulesNumFont);
+        JTextField score = new JTextField();
+        score.setBounds(700, 10, 100, 100);
+        score.setFocusable(false);
+        score.setFocusable(false);
+        score.setHorizontalAlignment(JTextField.CENTER);
+        score.setFont(actionNumFont);
+        score.setEditable(false);
+        score.setText("" + Score);
 
-        rulesExam.setText(" Чем сложнее пример, тем больше монет ты получишь! Набери 100 монет! "
-
-        );
-        rulesExam.setEditable(false);
-        rulesExam.setFocusable(false);
-
-        add(rulesExam);
-
-        return rulesExam;
-    }
-    private JTextField firstNumberTextField () {
         JTextField firstNum = new JTextField();
         firstNum.setBounds(10, 120, 150, 150);
         firstNum.setFocusable(false);
@@ -88,11 +66,14 @@ public class FirstPage extends JFrame
         firstNum.setFont(numFont);
         firstNum.setEditable(false);
         firstNum.setText(String.valueOf((int) (Math.random() * FirstNumber)));
-        add(firstNum);
 
-        return firstNum;
-    }
-    private JTextField secondNumberTextField () {
+        JTextField math = new JTextField();
+        math.setBounds(170,120,150,150);
+        math.setFocusable(false);
+        math.setText("*");
+        math.setHorizontalAlignment(JTextField.CENTER);
+        math.setFont(numFont);
+        math.setEditable(false);
 
         JTextField secondNum = new JTextField();
         secondNum.setBounds(330, 120, 150, 150);
@@ -103,13 +84,6 @@ public class FirstPage extends JFrame
         secondNum.setEditable(false);
         secondNum.setText(String.valueOf((int) (Math.random() * SecondNumber)));
 
-        add(secondNum);
-
-        return secondNum;
-    }
-
-    private JTextField equalTextField () {
-
         JTextField equal = new JTextField();
         equal.setBounds(490, 120, 150, 150);
         equal.setFocusable(false);
@@ -119,49 +93,13 @@ public class FirstPage extends JFrame
         equal.setEditable(false);
         equal.setText(" = ");
 
-        add(equal);
-        return equal;
-    }
-
-    private JTextField scoreTextField () {
-
-        JTextField score = new JTextField("0");
-        score.setBounds(700, 10, 100, 100);
-        score.setFocusable(false);
-        score.setFocusable(false);
-        score.setHorizontalAlignment(JTextField.CENTER);
-        score.setFont(actionNumFont);
-        score.setEditable(false);
-        score.setText("" + Score);
-
-        add(score);
-        return score;
-    }
-
-    private JButton checkButton() {
-
-        JButton check = new JButton("Проверить");
-        check.setBounds(430, 300, 380, 80);
-        check.setFont(actionNumFont);
-        check.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                if (foundRes()) {
-                    Score = Score + foundRatio();
-                } else {
-                    Score = Score - foundRatio();
-                    ;
-                }
-                scoreTextField().setText("" + Score);
-                newExamButton().setEnabled(true);
-            }
-        });
-        add(check);
-        return check;
-    }
-
-        private JButton newExamButton(){
+        JTextField answer = new JTextField();
+        answer.setBounds(650,120,150,150);
+        answer.setFocusable(true);
+        answer.setText("");
+        answer.setHorizontalAlignment(JTextField.CENTER);
+        answer.setFont(numFont);
+        answer.setEditable(true);
 
         JButton newExam = new JButton("Новый пример");
         newExam.setBounds(10,300,380,80);
@@ -172,46 +110,66 @@ public class FirstPage extends JFrame
             public void actionPerformed(ActionEvent e) {
 
                 newExam.setEnabled(false);
-                checkButton().setEnabled(true);
 
             }
         });
 
+        JButton check = new JButton("Проверить");
+        check.setBounds(430, 300, 380, 80);
+        check.setFont(actionNumFont);
+        check.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
-        add(newExam);
+                try {
+                    int ans = Integer.valueOf(answer.getText());
+                } catch (NumberFormatException exception) {
+                    answer.setText("-1");
+                }
 
-        return newExam;
-    }
-    private JTextField answerTextField () {
 
-        JTextField answer = new JTextField();
-        answer.setBounds(650,120,150,150);
-        answer.setFocusable(true);
-        answer.setText("");
-        answer.setHorizontalAlignment(JTextField.CENTER);
-        answer.setFont(numFont);
-        answer.setEditable(true);
+                if (foundRes(Integer.valueOf(firstNum.getText()), Integer.valueOf(secondNum.getText()), Integer.valueOf(answer.getText()))) {
+                    Score = Score + foundRatio();
+                } else {
+                    Score = Score - foundRatio();
+                    ;
+                }
+                score.setText("" + Score);
+                firstNum.setText(String.valueOf((int) (Math.random() * FirstNumber)+2));
+                secondNum.setText(String.valueOf((int) (Math.random() * SecondNumber)+2));
 
+                while (Integer.valueOf(secondNum.getText()) > Integer.valueOf(firstNum.getText()) && TypeOfExam == 2) {
+                      secondNum.setText(String.valueOf((int) (Math.random() * SecondNumber)));
+                }
+
+                answer.setText("");
+                math.setText(actMath());
+                ratio.setText("" + foundRatio());
+            }
+        });
+
+        add(rulesExam);
+        add(ratio);
+        add(score);
+
+        add(firstNum);
+        add(math);
+        add(secondNum);
+        add(equal);
         add(answer);
 
-        return answer;
-    }
-    private JTextField actionTextField(){
+        add(newExam);
+        add(check);
 
-        JTextField act = new JTextField();
-        act.setBounds(170,120,150,150);
-        act.setFocusable(false);
-        act.setText("*");
-        act.setHorizontalAlignment(JTextField.CENTER);
-        act.setFont(numFont);
-        act.setEditable(false);
+        getContentPane().setBackground(new Color(125,200,125));
+        setLayout(null);
+        setVisible(true);
 
-
-
-        return act;
     }
 
-    private JMenu examType ()
+
+
+    private  JMenu examType ()
     {
         JMenu file = new JMenu("Тип Экзамена");
         JCheckBoxMenuItem plus = new JCheckBoxMenuItem("Сложение");
@@ -235,7 +193,6 @@ public class FirstPage extends JFrame
             @Override
             public void actionPerformed(ActionEvent e) {
                 TypeOfExam = 1;
-                actionTextField().setText("+");
                 System.out.println("plus = " + 1);
             }
         });
@@ -243,7 +200,6 @@ public class FirstPage extends JFrame
             @Override
             public void actionPerformed(ActionEvent e) {
                 TypeOfExam = 2;
-                actionTextField().setText("-");
                 System.out.println("minus = " + TypeOfExam);
             }
         });
@@ -251,7 +207,6 @@ public class FirstPage extends JFrame
             @Override
             public void actionPerformed(ActionEvent e) {
                 TypeOfExam = 3;
-                actionTextField().setText("*");
                 System.out.println("multiplication = " + TypeOfExam);
             }
         });
@@ -259,13 +214,9 @@ public class FirstPage extends JFrame
             @Override
             public void actionPerformed(ActionEvent e) {
                 TypeOfExam = 4;
-                actionTextField().setText("/");
-                System.out.println(actionTextField().getText());
                 System.out.println("division = " + TypeOfExam);
             }
         });
-
-
 
         return file;
     }
@@ -292,7 +243,6 @@ public class FirstPage extends JFrame
             public void actionPerformed(ActionEvent e) {
                 FirstNumber = 8;
                 System.out.println("First number till 10 " + FirstNumber);
-                ratioTextField().setText("" + foundRatio());
             }
         });
         tillTwenty.addActionListener(new ActionListener() {
@@ -300,7 +250,6 @@ public class FirstPage extends JFrame
             public void actionPerformed(ActionEvent e) {
                 FirstNumber = 18;
                 System.out.println("First number till twenty " + FirstNumber);
-                ratioTextField().setText("" + foundRatio());
             }
         });
 
@@ -310,7 +259,6 @@ public class FirstPage extends JFrame
             public void actionPerformed(ActionEvent e) {
                 FirstNumber = 98;
                 System.out.println("First number till hundred " + FirstNumber);
-                ratioTextField().setText("" + foundRatio());
             }
         });
 
@@ -341,7 +289,6 @@ public class FirstPage extends JFrame
             public void actionPerformed(ActionEvent e) {
                 SecondNumber = 8;
                 System.out.println("Second number till 10 " + SecondNumber);
-                ratioTextField().setText("" + foundRatio());
             }
         });
         tillTwenty.addActionListener(new ActionListener() {
@@ -349,7 +296,6 @@ public class FirstPage extends JFrame
             public void actionPerformed(ActionEvent e) {
                 SecondNumber = 18;
                 System.out.println("second number till twenty " + SecondNumber);
-                ratioTextField().setText("" + foundRatio());
             }
         });
 
@@ -359,7 +305,6 @@ public class FirstPage extends JFrame
             public void actionPerformed(ActionEvent e) {
                 SecondNumber = 98;
                 System.out.println("second number till hundred " + SecondNumber);
-                ratioTextField().setText("" + foundRatio());
             }
         });
         return secondNum;
@@ -383,26 +328,46 @@ public class FirstPage extends JFrame
         return ratio;
     }
 
-    private  boolean foundRes ()
+    private  boolean foundRes (int num1, int num2, int sum)
     {
         int res = 0;
+
         if (TypeOfExam == 1 ) {
-            res = Integer.valueOf(firstNumberTextField().getText()) + Integer.valueOf(secondNumberTextField().getText());
+            res = Integer.valueOf(num1 + num2);
         }
         if (TypeOfExam == 2 ) {
-            res = Integer.valueOf(firstNumberTextField().getText()) - Integer.valueOf(secondNumberTextField().getText());
+            res = Integer.valueOf(num1 - num2);
         }
         if (TypeOfExam == 3 ) {
-            res = Integer.valueOf(firstNumberTextField().getText()) * Integer.valueOf(secondNumberTextField().getText());
+            res = Integer.valueOf(num1 * num2);
         }
         if (TypeOfExam == 4 ) {
-            res = Integer.valueOf(firstNumberTextField().getText()) / Integer.valueOf(secondNumberTextField().getText());
+            res = Integer.valueOf(num1 / num2);
         }
 
 
-        return res == Integer.valueOf(answerTextField().getText());
+        return res == sum;
     }
 
+    private  String  actMath ()
+    {
+        String ans = "";
 
+        if (TypeOfExam == 1 ) {
+            ans = "+";
+        }
+        if (TypeOfExam == 2 ) {
+            ans = "-";
+        }
+        if (TypeOfExam == 3 ) {
+            ans = "*";
+        }
+        if (TypeOfExam == 4 ) {
+            ans = "/";
+        }
+
+
+        return ans;
+    }
 
 }

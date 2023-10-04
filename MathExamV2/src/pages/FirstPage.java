@@ -1,6 +1,9 @@
 package pages;
 
 
+import buttons.CheckButton;
+import buttons.NewExamButton;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -16,8 +19,11 @@ public class FirstPage extends JFrame
 
 
     public Font numFont = new Font(Font.SERIF,1,55);
-    public Font actionNumFont = new Font(Font.SERIF,1,45);
+    public static Font actionNumFont = new Font(Font.SERIF,1,45);
     public Font rulesNumFont = new Font(Font.SERIF,1,30);
+
+    JButton newExamButton = new NewExamButton().newExamButton();
+    JButton checkButton = new CheckButton().checkButton();
 
     public  FirstPage ()
     {
@@ -101,52 +107,9 @@ public class FirstPage extends JFrame
         answer.setFont(numFont);
         answer.setEditable(true);
 
-        JButton newExam = new JButton("Новый пример");
-        newExam.setBounds(10,300,380,80);
-        newExam.setFont(actionNumFont);
+        add(newExamButton);
+        add(checkButton);
 
-        newExam.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                newExam.setEnabled(false);
-
-            }
-        });
-
-        JButton check = new JButton("Проверить");
-        check.setBounds(430, 300, 380, 80);
-        check.setFont(actionNumFont);
-        check.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                try {
-                    int ans = Integer.valueOf(answer.getText());
-                } catch (NumberFormatException exception) {
-                    answer.setText("-1");
-                }
-
-
-                if (foundRes(Integer.valueOf(firstNum.getText()), Integer.valueOf(secondNum.getText()), Integer.valueOf(answer.getText()))) {
-                    Score = Score + foundRatio();
-                } else {
-                    Score = Score - foundRatio();
-                    ;
-                }
-                score.setText("" + Score);
-                firstNum.setText(String.valueOf((int) (Math.random() * FirstNumber)+2));
-                secondNum.setText(String.valueOf((int) (Math.random() * SecondNumber)+2));
-
-                while (Integer.valueOf(secondNum.getText()) > Integer.valueOf(firstNum.getText()) && TypeOfExam == 2) {
-                      secondNum.setText(String.valueOf((int) (Math.random() * SecondNumber)));
-                }
-
-                answer.setText("");
-                math.setText(actMath());
-                ratio.setText("" + foundRatio());
-            }
-        });
 
         add(rulesExam);
         add(ratio);
@@ -158,8 +121,7 @@ public class FirstPage extends JFrame
         add(equal);
         add(answer);
 
-        add(newExam);
-        add(check);
+
 
         getContentPane().setBackground(new Color(125,200,125));
         setLayout(null);

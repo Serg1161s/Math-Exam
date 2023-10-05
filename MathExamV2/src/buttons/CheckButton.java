@@ -8,9 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class CheckButton {
-    public JButton checkButton(){
-        JButton button = new JButton("Проверить");
-        button.setBounds(430, 300, 380, 80);
+    public JButton checkButton(int x, int y, int width, int height, String str){
+        JButton button = new JButton(str);
+        button.setBounds(x,y,width,height);
         button.setFont(FirstPage.actionNumFont);
         return  button;
     }

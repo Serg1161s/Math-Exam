@@ -33,7 +33,10 @@ public class FirstPage extends JFrame
 
 
     JButton newExamButton = new NewExamButton().newExamButton();
-    JButton checkButton = new CheckButton().checkButton();
+    JButton checkButton = new CheckButton().checkButton(430, 300, 380, 80, "Проверить");
+    JButton checkTen= new CheckButton().checkButton(30, 300, 380, 80, "Проверить 10");
+
+
 
     JTextField ratioField = new TextFieldRatio().answerTextField();
     JTextField answerText = new AnswerTextField().answerTextField();
@@ -94,7 +97,31 @@ public class FirstPage extends JFrame
                 ratioField.setText("" + foundRatio());
             }
         });
+        add(checkTen);
 
+        checkTen.addActionListener(e-> {
+            try {
+                int ans = Integer.valueOf(answerText.getText());
+            } catch (NumberFormatException exception) {
+                answerText.setText("-1");
+            }
+
+            typeOfExam = 1;
+            if (foundRes(Integer.valueOf(firstNum.getText()), Integer.valueOf(secondNum.getText()), Integer.valueOf(answerText.getText()))) {
+                score = score + foundRatio();
+            } else {
+                score = score - foundRatio();
+
+            }
+            scoreText.setText("" + score);
+            firstNum.setText(String.valueOf((int) (Math.random() * 6)));
+            secondNum.setText(String.valueOf((int) (Math.random() * 6)));
+
+            mathText.setText(actMath());
+            ratioField.setText("" + foundRatio());
+
+
+        });
 
         add(rulesExam);
         add(ratioField);
